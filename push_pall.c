@@ -39,13 +39,25 @@ void push(stack_t **stack, int value)
 
 void pall(stack_t **stack, unsigned int line_number)
 {
-	stack_t *current = *stack;
+	stack_t *current_node = *stack;
 
 	(void)line_number;
 
-	while (current)
+	while (current_node)
 	{
-		printf("%d\n", current->n);
-		current = current->next;
+		printf("%d\n", current_node->n);
+		current_node = current_node->next;
+	}
+}
+
+
+void pint(stack_t **stack, unsigned int line_number)
+{
+	if (*stack)
+		printf("%d\n", (*stack)->n);
+	else
+	{
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		exit(EXIT_FAILURE);
 	}
 }
