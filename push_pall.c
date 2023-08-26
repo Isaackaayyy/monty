@@ -12,7 +12,7 @@ stack_t *stack = NULL;
 
 void push(stack_t **stack, int value)
 {
-	unsigned int line_number;
+	unsigned int line_number = 0;
 
 	stack_t *new_node = malloc(sizeof(stack_t));
 
