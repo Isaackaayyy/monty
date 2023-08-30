@@ -10,9 +10,9 @@ stack_t *stack = NULL;
  * @value: value
  */
 
-void push(stack_t **stack, int value)
+void push(__attribute((unused))stack_t **stack, int value)
 {
-	unsigned int line_number = 0;
+	stack_t *head;
 
 	stack_t *new_node = malloc(sizeof(stack_t));
 
@@ -21,22 +21,19 @@ void push(stack_t **stack, int value)
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-	if ((value == '\0') || !(value >= 0 && value <= 9))
-	{
-		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
 
 	new_node->n = value;
 	new_node->prev = NULL;
-	new_node->next = *stack;
+	new_node->next = NULL;
 
-	if (*stack)
+	if (head == NULL)
 		(*stack)->prev = new_node;
-
-
-	*stack = new_node;
-	free(new_node);
+	else
+	{
+		new_node->next = head;
+		head = new_node;
+		new_node->next->prev = new_node;
+	}
 }
 
 
@@ -45,13 +42,16 @@ void push(stack_t **stack, int value)
  * @stack: stack
  */
 
-void pall(stack_t **stack, unsigned int line_number)
+void pall(__attribute((unused))stack_t **stack, __attribute((unused))unsigned int line_number)
 {
 	stack_t *current_node = *stack;
 
 	(void)line_number;
 
-	while (current_node)
+	if (current_node == NULL)
+		return;
+
+	while (current_node != NULL)
 	{
 		printf("%d\n", current_node->n);
 		current_node = current_node->next;
@@ -59,13 +59,16 @@ void pall(stack_t **stack, unsigned int line_number)
 }
 
 
-void pint(stack_t **stack, unsigned int line_number)
+void pint(__attribute((unused))stack_t **stack, unsigned int line_number)
 {
-	if (*stack)
-		printf("%d\n", (*stack)->n);
-	else
+	stack_t *head;
+	stack_t *new = head;
+
+	if (head == NULL)
 	{
 		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
+
+	printf("%d\n", head->n);
 }

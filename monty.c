@@ -11,12 +11,12 @@
 int main(int argc, char *argv[])
 {
 	FILE *file;
-	char input[100];
-	unsigned int line_number = 1;
+	char input[1024];
+	unsigned int line_number = 0;
 
 	if (argc != 2)
 	{
-		fprintf(stderr, "USAGE: %s file\n", argv[0]);
+		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 
